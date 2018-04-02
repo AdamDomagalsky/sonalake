@@ -1,0 +1,48 @@
+<h2>Hero Detail</h2>
+
+<form [formGroup]="characterForm" (ngSubmit)="onSubmit()">
+	<div class="form-group">
+		<label class="center-block">Name
+			<span>*</span>:
+			<input autofocus placeholder="Name" class="form-control" formControlName="name" required>
+			<div *ngIf="characterForm.controls['name'].errors">
+				<div [hidden]="!characterForm.controls['name'].errors.required">* required - This field is required</div>
+			</div>
+		</label>
+	</div>
+	<div class="form-group radio">
+		<label class="center-block">Gender
+			<span>*</span>:</label>
+		<label class="center-block">
+			<input type="radio" formControlName="gender" value="male">Male</label>
+		<label class="center-block">
+			<input type="radio" formControlName="gender" value="female">Female</label>
+		<label class="center-block">
+			<input type="radio" formControlName="gender" value="n/a">n/a</label>
+		<div *ngIf="characterForm.controls['gender'].errors">
+			<div [hidden]="!characterForm.controls['gender'].errors.required">* required - This field is required</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="center-block">Homeworld:
+			<input placeholder="Homeworld" class="form-control" formControlName="homeworld">
+		</label>
+	</div>
+
+	<div class="form-group">
+		<label class="center-block">Species
+			<span>*</span>:
+			<select class="form-control" formControlName="species">
+				<option *ngFor="let x of spcs" [value]="x">{{x}}</option>
+			</select>
+			<div *ngIf="characterForm.controls['species'].errors">
+				<div [hidden]="!characterForm.controls['species'].errors.required">* required - This field is required</div>
+			</div>
+		</label>
+	</div>
+
+	<div style="margin-bottom: 1em">
+		<button type="submit" [hidden]="!characterForm.valid" class="btn btn-success">Save</button>
+	</div>
+</form>
