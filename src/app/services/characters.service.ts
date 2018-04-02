@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Observable } from 'rxjs/Observable';
-
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
@@ -50,7 +48,6 @@ export class CharactersService {
 			);
 	}
 
-
 	deleteCharacter(id: number) {
 		return this.http.delete(`${this.charactersURL}/${id}`)
 			.pipe(
@@ -58,7 +55,6 @@ export class CharactersService {
 				catchError(this.handleError)
 			);
 	}
-
 
 	search(terms: any) {
 		return terms.debounceTime(200)

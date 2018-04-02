@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 import { CharactersService, Character } from '../services/characters.service';
 import { PaginatorService } from '../services/paginator.service';
-import { Subject } from 'rxjs/Subject';
-
 
 @Component({
 	selector: 'sl-list-view',
@@ -20,7 +19,7 @@ export class ListViewComponent implements OnInit {
 	searchTerm: Subject<string> = new Subject<string>();
 
 	constructor(private paginator: PaginatorService, 
-							private charactersService: CharactersService) {}
+				private charactersService: CharactersService) {}
 
 	ngOnInit() {
 		this.charactersService.getCharacters()
@@ -43,8 +42,7 @@ export class ListViewComponent implements OnInit {
 			)
 	}
 
-
-	//here i dont know how to refresh the UI after delete
+	//[BUG] here i dont know how to refresh the UI after delete
 	remove(id:number){
 		this.charactersService.deleteCharacter(id)
 			.subscribe(success =>
