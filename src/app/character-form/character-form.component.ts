@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { Character, CharactersService } from '../services/characters.service';
   styleUrls: ['./character-form.component.css']
 })
 
-export class CharacterFormComponent {
+export class CharacterFormComponent implements OnInit {
   error: any;
   spcs: Array<string> = [];
   characterForm: FormGroup;
@@ -17,12 +17,14 @@ export class CharacterFormComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private charactersService: CharactersService) {
+    private charactersService: CharactersService) { }
+
+  ngOnInit() {
     this.charactersService.getSpecies()
-      .subscribe(
-        data => this.spcs = [...data],
-        error => this.error = error
-      );
+    .subscribe(
+      data => this.spcs = [...data],
+      error => this.error = error
+    );
     this.creatForm();
   }
 

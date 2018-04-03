@@ -17,16 +17,22 @@ export class ListViewComponent implements OnInit {
     error: any;
     searchTerm: Subject<string> = new Subject<string>();
 
+
     constructor(private paginator: PaginatorService,
         private charactersService: CharactersService) {
         this.pager = <Paginating>{};
     }
 
     ngOnInit() {
-        this.getCharactersArray();
+        this.getCharactersArray(1);
+        this.searchCharacter();
+    }
+
+    searchCharacter() {
         this.charactersService.search(this.searchTerm)
             .subscribe(
                 data => {
+                    console.log([...data]);
                     this.allItems = [...data];
                     this.setPage();
                 },
@@ -34,13 +40,13 @@ export class ListViewComponent implements OnInit {
             );
     }
 
-    getCharactersArray() {
+    getCharactersArray(page: number = 1) {
         this.charactersService.getCharacters()
             .subscribe(
                 data => {
                     console.log([...data]);
                     this.allItems = [...data];
-                    this.setPage(this.pager.currentPage);
+                    this.setPage(page);
                 },
                 error => this.error = error
             );
@@ -49,13 +55,13 @@ export class ListViewComponent implements OnInit {
     remove(id: number) {
         this.charactersService.deleteCharacter(id)
             .subscribe(success =>
-                this.getCharactersArray(),
+                this.getCharactersArray(Math.ceil((this.pager.totalItems - 1) / this.pager.pageSize)),
                 error => this.error
             );
     }
 
     setPage(page: number = 1) {
-        if (page < 1 || page > this.pager.totalPages) {
+        if (page < 1 || page > this.pager.totalPages + 1) {
             return;
         }
         this.pager = this.paginator.getPager(this.allItems.length, page);

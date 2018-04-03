@@ -68,10 +68,10 @@ export class CharactersService {
             : this.charactersURL + this.queryURL + term;
 
         return this.http.get<Character>(URL)
-        .pipe(
-            retry(3),
-            catchError(this.handleError)
-        );
+            .pipe(
+                retry(3),
+                catchError(this.handleError)
+            );
     }
 
     private handleError(error: HttpErrorResponse) {
