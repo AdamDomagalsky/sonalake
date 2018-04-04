@@ -55,7 +55,10 @@ export class ListViewComponent implements OnInit {
     remove(id: number) {
         this.charactersService.deleteCharacter(id)
             .subscribe(success =>
-                this.getCharactersArray(Math.ceil((this.pager.totalItems - 1) / this.pager.pageSize)),
+                this.getCharactersArray(
+                    this.pager.endPage === this.pager.currentPage
+                        ? Math.ceil((this.pager.totalItems - 1) / this.pager.pageSize)
+                        : this.pager.currentPage),
                 error => this.error
             );
     }
