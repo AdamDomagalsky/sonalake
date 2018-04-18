@@ -32,8 +32,8 @@ export class ListViewComponent implements OnInit {
         this.charactersService.search(this.searchTerm)
             .subscribe(
                 data => {
-                    console.log([...data]);
-                    this.allItems = [...data];
+                    console.log(data);
+                    this.allItems = data;
                     this.setPage();
                 },
                 error => this.error = error
@@ -44,8 +44,8 @@ export class ListViewComponent implements OnInit {
         this.charactersService.getCharacters()
             .subscribe(
                 data => {
-                    console.log([...data]);
-                    this.allItems = [...data];
+                    console.log(data);
+                    this.allItems = data;
                     this.setPage(page);
                 },
                 error => this.error = error
